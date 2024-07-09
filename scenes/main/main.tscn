@@ -1,0 +1,89 @@
+[gd_scene load_steps=10 format=3 uid="uid://b58kls1q5rqf"]
+
+[ext_resource type="Texture2D" uid="uid://dgf8r5x0da3i5" path="res://assets/sprites/campo-roxo.png" id="1_ocf7s"]
+[ext_resource type="Texture2D" uid="uid://b6et55ov8k4ko" path="res://assets/sprites/jogador.png" id="2_4nag2"]
+[ext_resource type="PackedScene" uid="uid://d2y6hkwov256d" path="res://scenes/jogador/jogador.tscn" id="3_rvs4y"]
+[ext_resource type="PackedScene" uid="uid://1ndogir1ji7s" path="res://scenes/bola/bola.tscn" id="4_7iaii"]
+[ext_resource type="PackedScene" uid="uid://d23ecgb8265px" path="res://scenes/game_manager/game_manager.tscn" id="5_dgw3r"]
+[ext_resource type="PackedScene" uid="uid://dye82b6wc883x" path="res://scenes/gol/gol.tscn" id="6_dqw5s"]
+[ext_resource type="FontFile" uid="uid://4kvy63hgfayu" path="res://assets/fonte/PublicPixel-z84yD.ttf" id="7_kuf1w"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7xxqk"]
+font = ExtResource("7_kuf1w")
+font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_sqio8"]
+font = ExtResource("7_kuf1w")
+font_size = 50
+
+[node name="Main" type="Node2D"]
+
+[node name="Campo" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+texture = ExtResource("1_ocf7s")
+
+[node name="LinhaDoMeio" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+scale = Vector2(0.5, 5.6)
+texture = ExtResource("2_4nag2")
+
+[node name="Jogador1" parent="." instance=ExtResource("3_rvs4y")]
+position = Vector2(64, 360)
+jogador1 = true
+
+[node name="Jogador2" parent="." instance=ExtResource("3_rvs4y")]
+position = Vector2(1216, 360)
+
+[node name="Bola" parent="." instance=ExtResource("4_7iaii")]
+position = Vector2(640, 360)
+
+[node name="GameManager" parent="." instance=ExtResource("5_dgw3r")]
+
+[node name="Gol1" parent="." instance=ExtResource("6_dqw5s")]
+position = Vector2(-64, 0)
+
+[node name="Gol2" parent="." instance=ExtResource("6_dqw5s")]
+position = Vector2(1344, 0)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="PainelDePontuacao" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextoPontuacaoJogador1" type="Label" parent="UI/PainelDePontuacao"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -125.0
+offset_top = 10.0
+offset_right = -75.0
+offset_bottom = 60.0
+grow_horizontal = 2
+text = "0"
+label_settings = SubResource("LabelSettings_7xxqk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextoPontucaoJogador2" type="Label" parent="UI/PainelDePontuacao"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 75.0
+offset_top = 10.0
+offset_right = 125.0
+offset_bottom = 60.0
+grow_horizontal = 2
+text = "0"
+label_settings = SubResource("LabelSettings_sqio8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="area_entered" from="Gol1" to="GameManager" method="_on_gol_1_area_entered"]
+[connection signal="area_entered" from="Gol2" to="GameManager" method="_on_gol_2_area_entered"]
